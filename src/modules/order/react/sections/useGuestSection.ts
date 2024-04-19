@@ -1,17 +1,11 @@
+import { GuestForm } from "@ratatouille/modules/order/core/form/guest.form";
 import { OrderingDomainModel } from "@ratatouille/modules/order/model/ordering.domain-model";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export const useGuestSection = () => {
   function addGuest() {
-    setGuests([
-      ...guests,
-      {
-        id: Math.random().toString(),
-        firstName: "",
-        lastName: "",
-        age: 0,
-      },
-    ]);
+    const newState = guestForm.current.addGuest(guests);
+    setGuests(newState);
   }
 
   function removeGuest(id: string) {
@@ -33,6 +27,8 @@ export const useGuestSection = () => {
   function isSubmittable() {
     return false;
   }
+
+  const guestForm = useRef(new GuestForm());
 
   const [guests, setGuests] = useState<OrderingDomainModel.Guest[]>([]);
 
