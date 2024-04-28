@@ -19,7 +19,7 @@ export const GuestSection: React.FC<{}> = () => {
     <Box sx={{ marginTop: 2 }}>
       <Typography variant="h5">Guests</Typography>
       <Grid sx={{ paddingTop: 2 }} rowSpacing={4}>
-        {presenter.guests.map((guest) => {
+        {presenter.form.guests.map((guest) => {
           return (
             <Grid item key={guest.id}>
               <GestRow
