@@ -4,7 +4,9 @@ import React from "react";
 import {
   Box,
   Button,
+  Checkbox,
   FormControl,
+  FormControlLabel,
   FormLabel,
   Grid,
   TextField,
@@ -19,20 +21,20 @@ export const GuestSection: React.FC<{}> = () => {
     <Box sx={{ marginTop: 2 }}>
       <Typography variant="h5">Guests</Typography>
       <Grid sx={{ paddingTop: 2 }} rowSpacing={4}>
-        {presenter.form.guests.map((guest) => {
-          return (
-            <Grid item key={guest.id}>
-              <GestRow
-                id={guest.id}
-                firstName={guest.firstName}
-                lastName={guest.lastName}
-                age={guest.age}
-                onChange={presenter.changeOrganizer}
-                remove={presenter.removeGuest}
-              />
-            </Grid>
-          );
-        })}
+        {presenter.form.guests.map((guest) => (
+          <Grid item key={guest.id}>
+            <GestRow
+              id={guest.id}
+              firstName={guest.firstName}
+              lastName={guest.lastName}
+              age={guest.age}
+              isOrganizer={guest.id === presenter.form.organizerId}
+              onChange={presenter.changeOrganizer}
+              remove={presenter.removeGuest}
+              changeOrganizer={presenter.changeOrganizer}
+            />
+          </Grid>
+        ))}
       </Grid>
       <Grid
         container
@@ -47,7 +49,11 @@ export const GuestSection: React.FC<{}> = () => {
           </Button>
         </Grid>
         <Grid item>
-          <Button variant="contained" onClick={presenter.onNext}>
+          <Button
+            variant="contained"
+            onClick={presenter.onNext}
+            disabled={!presenter.isSubmittable}
+          >
             Next
           </Button>
         </Grid>
@@ -61,9 +67,21 @@ const GestRow: React.FC<{
   firstName: string;
   lastName: string;
   age: number;
+  isOrganizer: boolean;
+
   onChange: (id: string, key: string, value: string | number) => void;
   remove: (id: string) => void;
-}> = ({ id, firstName, lastName, age, onChange, remove }) => {
+  changeOrganizer: (id: string) => void;
+}> = ({
+  id,
+  firstName,
+  lastName,
+  age,
+  isOrganizer,
+  onChange,
+  remove,
+  changeOrganizer,
+}) => {
   return (
     <Box>
       <Grid container direction={"row"} alignItems={"center"} spacing={1}>
@@ -94,12 +112,25 @@ const GestRow: React.FC<{
             />
           </FormControl>
         </Grid>
-        <Button
-          variant="contained"
-          onClick={() => remove(id)}
-          startIcon={<DeleteIcon />}
-          color="error"
+        <FormControlLabel
+          label="Organisateur"
+          control={
+            <Checkbox
+              checked={isOrganizer}
+              onChange={() => changeOrganizer(id)}
+            />
+          }
         />
+        <Box sx={{ marginTop: 2 }}>
+          <Button
+            variant="contained"
+            onClick={() => remove(id)}
+            startIcon={<DeleteIcon />}
+            color="error"
+          >
+            Supprimer
+          </Button>
+        </Box>
       </Grid>
     </Box>
   );

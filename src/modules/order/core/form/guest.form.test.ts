@@ -127,3 +127,26 @@ describe("removing a guest", () => {
     ]);
   });
 });
+
+describe("Add an organiser", () => {
+  it("Set organizer ID when the user doen't exist", () => {
+    const state = form.changeOrganizer(emptyInitialState, "1");
+    expect(state.organizerId).toEqual(null);
+  });
+
+  it("Set organizer ID when one user exist", () => {
+    const state = form.changeOrganizer(stateWithOneUser, "1");
+    expect(state.organizerId).toEqual("1");
+  });
+});
+
+describe("Is submittable", () => {
+  it("should return false", () => {
+    const withOrganizerState = {
+      ...stateWithOneUser,
+      organizerId: "1",
+    };
+    const isSubmittable = form.isSubmittable(withOrganizerState);
+    expect(isSubmittable).toEqual(true);
+  });
+});
