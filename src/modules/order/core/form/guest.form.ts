@@ -9,10 +9,14 @@ export class GuestForm {
       ...state,
       {
         id: this.idProvider.generate(),
-        firstName: "john",
-        lastName: "doe",
+        firstName: "John",
+        lastName: "Doe",
         age: 0,
       },
     ];
+  }
+
+  removeGuest(state: OrderingDomainModel.Guest[], id: string) {
+    return state.filter((guest) => guest.id !== id);
   }
 }
