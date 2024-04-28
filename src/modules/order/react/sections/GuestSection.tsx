@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useGuestSection } from "@ratatouille/modules/order/react/sections/useGuestSection";
+import { OrderingDomainModel } from "@ratatouille/modules/order/model/ordering.domain-model";
 
 export const GuestSection: React.FC<{}> = () => {
   const presenter = useGuestSection();
@@ -29,7 +30,7 @@ export const GuestSection: React.FC<{}> = () => {
               lastName={guest.lastName}
               age={guest.age}
               isOrganizer={guest.id === presenter.form.organizerId}
-              onChange={presenter.changeOrganizer}
+              onChange={presenter.updateGuest}
               remove={presenter.removeGuest}
               changeOrganizer={presenter.changeOrganizer}
             />
@@ -69,7 +70,11 @@ const GestRow: React.FC<{
   age: number;
   isOrganizer: boolean;
 
-  onChange: (id: string, key: string, value: string | number) => void;
+  onChange: <T extends keyof OrderingDomainModel.Guest>(
+    id: string,
+    key: T,
+    value: OrderingDomainModel.Guest[T]
+  ) => void;
   remove: (id: string) => void;
   changeOrganizer: (id: string) => void;
 }> = ({

@@ -22,8 +22,13 @@ export const useGuestSection = () => {
     setForm(newState);
   }
 
-  function updateGuest() {
-    console.log("updateGuest");
+  function updateGuest<T extends keyof OrderingDomainModel.Guest>(
+    id: string,
+    key: T,
+    value: OrderingDomainModel.Guest[T]
+  ) {
+    const newState = guestForm.current.updateGuest(form, id, key, value);
+    setForm(newState);
   }
 
   function changeOrganizer(id: string) {

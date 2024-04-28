@@ -1,6 +1,6 @@
 import { IIdProvider } from "@ratatouille/modules/core/id-provider";
 import { OrderingDomainModel } from "@ratatouille/modules/order/model/ordering.domain-model";
-import { nanoid } from "nanoid";
+
 export class GuestForm {
   constructor(private idProvider: IIdProvider) {}
 
@@ -35,5 +35,19 @@ export class GuestForm {
 
   isSubmittable(state: OrderingDomainModel.Form) {
     return state.organizerId !== null;
+  }
+
+  updateGuest<T extends keyof OrderingDomainModel.Guest>(
+    state: OrderingDomainModel.Form,
+    id: OrderingDomainModel.Guest["id"],
+    key: T,
+    value: OrderingDomainModel.Guest[T]
+  ) {
+    return {
+      ...state,
+      guests: state.guests.map((guest) =>
+        guest.id === id ? { ...guest, [key]: value } : guest
+      ),
+    };
   }
 }
