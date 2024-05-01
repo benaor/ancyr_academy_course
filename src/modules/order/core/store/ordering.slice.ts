@@ -6,6 +6,8 @@ export type OrderingState = {
   form: OrderingDomainModel.Form;
 
   availableTables: {
+    status: "idle" | "loading" | "success" | "error";
+    error: string | null;
     data: OrderingDomainModel.Table[];
   };
 };
@@ -17,6 +19,8 @@ export const initialState: OrderingState = {
     organizerId: null,
   },
   availableTables: {
+    status: "idle",
+    error: null,
     data: [],
   },
 };
@@ -31,8 +35,16 @@ export const orderingSlice = createSlice({
     chooseGuests(state, action: PayloadAction<OrderingDomainModel.Form>) {
       state.form = action.payload;
     },
+    handleTablesLoading(state) {
+      state.availableTables.status = "loading";
+    },
+    handleTablesError(state, action: PayloadAction<string>) {
+      state.availableTables.status = "error";
+      state.availableTables.error = action.payload;
+    },
     storeTables(state, action: PayloadAction<OrderingDomainModel.Table[]>) {
       state.availableTables.data = action.payload;
+      state.availableTables.status = "success";
     },
   },
 });

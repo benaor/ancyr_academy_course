@@ -17,9 +17,42 @@ describe("Fetch tables", () => {
       },
     });
 
-    await store.dispatch(fetchTables);
+    const promise = store.dispatch(fetchTables);
+
+    expect(store.getState().ordering.availableTables.status).toBe("loading");
+
+    await promise;
+
     expect(store.getState().ordering.availableTables.data).toEqual(
       listOfTables
+    );
+    expect(store.getState().ordering.availableTables.status).toBe("success");
+  });
+
+  it("Should handle table fetching failure", async () => {
+    const table = TableFactory.create({
+      id: "1",
+    });
+
+    const listOfTables = [table];
+    const store = createTestStore({
+      dependencies: {
+        tableGateway: {
+          getTables: () => Promise.reject(new Error("failed to fetch data")),
+        },
+      },
+    });
+
+    const promise = store.dispatch(fetchTables);
+
+    expect(store.getState().ordering.availableTables.status).toEqual("loading");
+
+    await promise;
+
+    expect(store.getState().ordering.availableTables.data).toEqual([]);
+    expect(store.getState().ordering.availableTables.status).toEqual("error");
+    expect(store.getState().ordering.availableTables.error).toEqual(
+      "failed to fetch data"
     );
   });
 });
