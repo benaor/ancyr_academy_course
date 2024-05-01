@@ -126,6 +126,15 @@ describe("removing a guest", () => {
       },
     ]);
   });
+
+  it("Should remove organizer when the deleted user is him", () => {
+    const withOrganizerState = {
+      ...stateWithTwoUsers,
+      organizerId: "1",
+    };
+    const state = form.removeGuest(withOrganizerState, "1");
+    expect(state.organizerId).toBeNull();
+  });
 });
 
 describe("Add an organiser", () => {
@@ -168,5 +177,10 @@ describe("Update a guest", () => {
   ])(`Should change the %s of the guest`, ({ key, value }) => {
     const state = form.updateGuest(stateWithOneUser, "1", key, value);
     expect(state.guests[0][key]).toEqual(value);
+  });
+
+  it("Should do nothing when the guest doesn't exist", () => {
+    const state = form.updateGuest(stateWithOneUser, "2", "firstName", "Jane");
+    expect(state.guests).toEqual(stateWithOneUser.guests);
   });
 });

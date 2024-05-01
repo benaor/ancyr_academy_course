@@ -1,36 +1,33 @@
 import { IIdProvider } from "@ratatouille/modules/core/id-provider";
 import { OrderingDomainModel } from "@ratatouille/modules/order/model/ordering.domain-model";
+import { produce } from "immer";
 
 export class GuestForm {
   constructor(private idProvider: IIdProvider) {}
 
   addGuest(state: OrderingDomainModel.Form): OrderingDomainModel.Form {
-    return {
-      ...state,
-      guests: [
-        ...state.guests,
-        {
-          id: this.idProvider.generate(),
-          firstName: "John",
-          lastName: "Doe",
-          age: 0,
-        },
-      ],
-    };
+    return produce(state, (draft) => {
+      draft.guests.push({
+        id: this.idProvider.generate(),
+        firstName: "John",
+        lastName: "Doe",
+        age: 0,
+      });
+    });
   }
 
   removeGuest(state: OrderingDomainModel.Form, id: string) {
-    return {
-      ...state,
-      guests: state.guests.filter((guest) => guest.id !== id),
-    };
+    return produce(state, (draft) => {
+      draft.guests = draft.guests.filter((guest) => guest.id !== id);
+      if (draft.organizerId === id) draft.organizerId = null;
+    });
   }
 
   changeOrganizer(state: OrderingDomainModel.Form, id: string) {
-    return {
-      ...state,
-      organizerId: state.guests.some((guest) => guest.id === id) ? id : null,
-    };
+    return produce(state, (draft) => {
+      const exist = draft.guests.some((guest) => guest.id === id);
+      draft.organizerId = exist ? id : null;
+    });
   }
 
   isSubmittable(state: OrderingDomainModel.Form) {
@@ -43,11 +40,10 @@ export class GuestForm {
     key: T,
     value: OrderingDomainModel.Guest[T]
   ) {
-    return {
-      ...state,
-      guests: state.guests.map((guest) =>
-        guest.id === id ? { ...guest, [key]: value } : guest
-      ),
-    };
+    return produce(state, (draft) => {
+      const guest = draft.guests.find((guest) => guest.id === id);
+      if (!guest) return;
+      guest[key] = value;
+    });
   }
 }
