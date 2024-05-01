@@ -5,7 +5,7 @@ import { AppDispatch, AppGetState } from "@ratatouille/modules/store/store";
 
 export const fetchTables = async (
   dispatch: AppDispatch,
-  state: AppGetState,
+  _: AppGetState,
   dependencies: Dependencies
 ) => {
   dispatch(orderingSlice.actions.handleTablesLoading());

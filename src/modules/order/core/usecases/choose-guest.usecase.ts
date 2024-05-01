@@ -4,6 +4,6 @@ import { AppDispatch, AppGetState } from "@ratatouille/modules/store/store";
 
 export const chooseGuests =
   (form: OrderingDomainModel.Form) =>
-  (dispatch: AppDispatch, state: AppGetState) => {
+  (dispatch: AppDispatch, _: AppGetState) => {
     dispatch(orderingActions.chooseGuests(form));
   };
