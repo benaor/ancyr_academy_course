@@ -13,6 +13,6 @@ export const fetchTables = async (
     const tables = await dependencies.tableGateway.getTables();
     dispatch(orderingSlice.actions.storeTables(tables));
   } catch (e) {
-    dispatch(orderingSlice.actions.handleTablesError(e.message));
+    dispatch(orderingSlice.actions.handleTablesError((e as Error).message));
   }
 };
