@@ -1,7 +1,7 @@
 import { IIdProvider } from "@ratatouille/modules/core/id-provider";
 import { GuestForm } from "@ratatouille/modules/order/core/form/guest.form";
-import { guestFactory } from "@ratatouille/modules/order/model/guest.factory";
-import { OrderingDomainModel } from "@ratatouille/modules/order/model/ordering.domain-model";
+import { guestFactory } from "@ratatouille/modules/order/core/model/guest.factory";
+import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
 
 class StubIdProvider implements IIdProvider {
   generate() {

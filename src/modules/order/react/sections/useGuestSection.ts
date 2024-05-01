@@ -1,6 +1,6 @@
 import { useDependencies } from "@ratatouille/modules/app/react/DependenciesProvider";
 import { GuestForm } from "@ratatouille/modules/order/core/form/guest.form";
-import { OrderingDomainModel } from "@ratatouille/modules/order/model/ordering.domain-model";
+import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
 import { useRef, useState } from "react";
 
 export const useGuestSection = () => {

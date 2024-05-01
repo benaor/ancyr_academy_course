@@ -1,5 +1,5 @@
 import { IIdProvider } from "@ratatouille/modules/core/id-provider";
-import { OrderingDomainModel } from "@ratatouille/modules/order/model/ordering.domain-model";
+import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
 import { produce } from "immer";
 
 export class GuestForm {

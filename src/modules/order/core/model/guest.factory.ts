@@ -1,4 +1,4 @@
-import { OrderingDomainModel } from "@ratatouille/modules/order/model/ordering.domain-model";
+import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
 
 export class guestFactory {
   static create(
