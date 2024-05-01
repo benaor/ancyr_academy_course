@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useGuestSection } from "@ratatouille/modules/order/react/sections/useGuestSection";
+import { useGuestSection } from "@ratatouille/modules/order/react/sections/guest/useGuestSection";
 import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
 
 export const GuestSection: React.FC<{}> = () => {
