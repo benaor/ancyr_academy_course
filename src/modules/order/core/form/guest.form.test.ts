@@ -1,5 +1,6 @@
 import { IIdProvider } from "@ratatouille/modules/core/id-provider";
 import { GuestForm } from "@ratatouille/modules/order/core/form/guest.form";
+import { guestFactory } from "@ratatouille/modules/order/model/guest.factory";
 import { OrderingDomainModel } from "@ratatouille/modules/order/model/ordering.domain-model";
 
 class StubIdProvider implements IIdProvider {
@@ -9,38 +10,33 @@ class StubIdProvider implements IIdProvider {
 }
 
 const idProvider = new StubIdProvider();
+
+const johnDoe = guestFactory.create({
+  id: "1",
+  firstName: "John",
+  lastName: "Doe",
+  age: 24,
+});
+
+const janeDoe = guestFactory.create({
+  id: "2",
+  firstName: "Jane",
+  lastName: "Doe",
+  age: 24,
+});
+
 const emptyInitialState: OrderingDomainModel.Form = {
   guests: [],
   organizerId: null,
 };
 
 const stateWithOneUser: OrderingDomainModel.Form = {
-  guests: [
-    {
-      id: "1",
-      firstName: "John",
-      lastName: "Doe",
-      age: 0,
-    },
-  ],
+  guests: [johnDoe],
   organizerId: null,
 };
 
 const stateWithTwoUsers: OrderingDomainModel.Form = {
-  guests: [
-    {
-      id: "1",
-      firstName: "John",
-      lastName: "Doe",
-      age: 0,
-    },
-    {
-      id: "2",
-      firstName: "John",
-      lastName: "Doe",
-      age: 0,
-    },
-  ],
+  guests: [johnDoe, janeDoe],
   organizerId: null,
 };
 
@@ -68,7 +64,7 @@ describe("Add a guest", () => {
         id: "1",
         firstName: "John",
         lastName: "Doe",
-        age: 0,
+        age: 24,
       },
       {
         id: "1",
@@ -86,13 +82,13 @@ describe("Add a guest", () => {
         id: "1",
         firstName: "John",
         lastName: "Doe",
-        age: 0,
+        age: 24,
       },
       {
         id: "2",
-        firstName: "John",
+        firstName: "Jane",
         lastName: "Doe",
-        age: 0,
+        age: 24,
       },
       {
         id: "1",
@@ -120,9 +116,9 @@ describe("removing a guest", () => {
     expect(state.guests).toEqual([
       {
         id: "2",
-        firstName: "John",
+        firstName: "Jane",
         lastName: "Doe",
-        age: 0,
+        age: 24,
       },
     ]);
   });
@@ -158,6 +154,32 @@ describe("Is submittable", () => {
     const isSubmittable = form.isSubmittable(withOrganizerState);
     expect(isSubmittable).toEqual(true);
   });
+});
+
+it.each([
+  {
+    age: 0,
+  },
+  {
+    firstName: "",
+  },
+  {
+    lastName: "",
+  },
+])("When the guest is NOT valid, it should NOT be submittable", (guest) => {
+  const withOrganizerState = {
+    ...stateWithOneUser,
+    organizerId: "1",
+    guests: [
+      {
+        ...johnDoe,
+        ...guest,
+      },
+    ],
+  };
+
+  const isSubmittable = form.isSubmittable(withOrganizerState);
+  expect(isSubmittable).toEqual(false);
 });
 
 describe("Update a guest", () => {
