@@ -28,16 +28,19 @@ const janeDoe = guestFactory.create({
 const emptyInitialState: OrderingDomainModel.Form = {
   guests: [],
   organizerId: null,
+  tableId: null,
 };
 
 const stateWithOneUser: OrderingDomainModel.Form = {
   guests: [johnDoe],
   organizerId: null,
+  tableId: null,
 };
 
 const stateWithTwoUsers: OrderingDomainModel.Form = {
   guests: [johnDoe, janeDoe],
   organizerId: null,
+  tableId: null,
 };
 
 const form = new GuestForm(idProvider);
@@ -52,6 +55,12 @@ describe("Add a guest", () => {
         firstName: "John",
         lastName: "Doe",
         age: 0,
+        meals: {
+          entry: null,
+          mainCourse: null,
+          dessert: null,
+          drink: null,
+        },
       },
     ]);
   });
@@ -65,12 +74,24 @@ describe("Add a guest", () => {
         firstName: "John",
         lastName: "Doe",
         age: 24,
+        meals: {
+          entry: null,
+          mainCourse: null,
+          dessert: null,
+          drink: null,
+        },
       },
       {
         id: "1",
         firstName: "John",
         lastName: "Doe",
         age: 0,
+        meals: {
+          entry: null,
+          mainCourse: null,
+          dessert: null,
+          drink: null,
+        },
       },
     ]);
   });
@@ -83,18 +104,36 @@ describe("Add a guest", () => {
         firstName: "John",
         lastName: "Doe",
         age: 24,
+        meals: {
+          entry: null,
+          mainCourse: null,
+          dessert: null,
+          drink: null,
+        },
       },
       {
         id: "2",
         firstName: "Jane",
         lastName: "Doe",
         age: 24,
+        meals: {
+          entry: null,
+          mainCourse: null,
+          dessert: null,
+          drink: null,
+        },
       },
       {
         id: "1",
         firstName: "John",
         lastName: "Doe",
         age: 0,
+        meals: {
+          entry: null,
+          mainCourse: null,
+          dessert: null,
+          drink: null,
+        },
       },
     ]);
   });
@@ -119,6 +158,12 @@ describe("removing a guest", () => {
         firstName: "Jane",
         lastName: "Doe",
         age: 24,
+        meals: {
+          entry: null,
+          mainCourse: null,
+          dessert: null,
+          drink: null,
+        },
       },
     ]);
   });
