@@ -91,9 +91,101 @@ describe("Selecting meals", () => {
         guest: child,
         expected: [regularEntry],
       },
-    ])("should return nothing", ({ meals, guest, expected }) => {
+    ])("should get selectable entries", ({ meals, guest, expected }) => {
       const result = mealForm.getSelectableEntries(meals, guest);
       expect(result).toEqual(expected);
     });
+  });
+
+  describe("Selecting main-course", () => {
+    it.each([
+      {
+        meals: [],
+        guest: adult,
+        expected: [],
+      },
+      {
+        meals,
+        guest: adult,
+        expected: [regularMainCourse, adultMainCourse],
+      },
+      {
+        meals,
+        guest: child,
+        expected: [regularMainCourse],
+      },
+    ])("should get selectable entries", ({ meals, guest, expected }) => {
+      const result = mealForm.getSelectableMainCourses(meals, guest);
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe("Selecting desserts", () => {
+    it.each([
+      {
+        meals: [],
+        guest: adult,
+        expected: [],
+      },
+      {
+        meals,
+        guest: adult,
+        expected: [regularDessert, adultDessert],
+      },
+      {
+        meals,
+        guest: child,
+        expected: [regularDessert],
+      },
+    ])("should get selectable entries", ({ meals, guest, expected }) => {
+      const result = mealForm.getSelectableDesserts(meals, guest);
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe("Selecting drinks", () => {
+    it.each([
+      {
+        meals: [],
+        guest: adult,
+        expected: [],
+      },
+      {
+        meals,
+        guest: adult,
+        expected: [regularDrink, adultDrink],
+      },
+      {
+        meals,
+        guest: child,
+        expected: [regularDrink],
+      },
+    ])("should get selectable entries", ({ meals, guest, expected }) => {
+      const result = mealForm.getSelectableDrinks(meals, guest);
+      expect(result).toEqual(expected);
+    });
+  });
+});
+
+describe("Assinging meals", () => {
+  const form: OrderingDomainModel.Form = {
+    guests: [adult, child],
+    organizerId: adult.id,
+    tableId: "1",
+  };
+
+  it("Should assign NULL as an entry", () => {
+    const result = mealForm.assignEntry(form, adult.id, null);
+    expect(result.guests[0].meals.entry).toBeNull();
+  });
+
+  it("Should assign the adult entry as an entry to an adult guest", () => {
+    const result = mealForm.assignEntry(form, adult.id, adultEntry.id);
+    expect(result.guests[0].meals.entry).toEqual(adultEntry.id);
+  });
+
+  it("Should assign the adult entry as an entry to an unexisting guest", () => {
+    const result = mealForm.assignEntry(form, "non-existant", adultEntry.id);
+    expect(result).toEqual(form);
   });
 });
