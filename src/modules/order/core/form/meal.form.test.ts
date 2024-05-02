@@ -272,3 +272,52 @@ describe("Assinging meals", () => {
     });
   });
 });
+
+const submittableForm: OrderingDomainModel.Form = {
+  guests: [
+    guestFactory.create({
+      meals: {
+        entry: null,
+        mainCourse: regularMainCourse.id,
+        dessert: null,
+        drink: null,
+      },
+    }),
+  ],
+  organizerId: adult.id,
+  tableId: "1",
+};
+
+const unSubmittableForm: OrderingDomainModel.Form = {
+  guests: [
+    guestFactory.create({
+      meals: {
+        entry: null,
+        mainCourse: null,
+        dessert: null,
+        drink: null,
+      },
+    }),
+  ],
+  organizerId: adult.id,
+  tableId: "1",
+};
+
+describe("is submittable", () => {
+  it.each([
+    {
+      form: submittableForm,
+      isSubmittable: true,
+    },
+    {
+      form: unSubmittableForm,
+      isSubmittable: false,
+    },
+  ])(
+    "Should return weither form is submittable or not",
+    ({ form, isSubmittable }) => {
+      const result = mealForm.isSubmittable(form);
+      expect(result).toEqual(isSubmittable);
+    }
+  );
+});
