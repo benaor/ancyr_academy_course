@@ -1,7 +1,11 @@
 import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
+import { orderingActions } from "@ratatouille/modules/order/core/store/ordering.slice";
+import { AppState } from "@ratatouille/modules/store/store";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export const useTable = () => {
+  const dispatch = useDispatch();
   const [assignedTableId, setAssignedTableId] = useState<string | null>(null);
 
   function assignTable(tableId: string) {
@@ -9,18 +13,20 @@ export const useTable = () => {
   }
 
   function onNext() {
-    console.log("next");
+    dispatch(orderingActions.setStep(OrderingDomainModel.OrderingStep.MEALS));
   }
 
   function onPrevious() {
-    console.log("previous");
+    dispatch(orderingActions.setStep(OrderingDomainModel.OrderingStep.GUESTS));
   }
 
   function isSubmittable() {
-    return false;
+    return assignedTableId !== null;
   }
 
-  const availableTables: OrderingDomainModel.Table[] = [];
+  const availableTables: OrderingDomainModel.Table[] = useSelector(
+    (state: AppState) => state.ordering.availableTables.data
+  );
 
   return {
     assignTable,

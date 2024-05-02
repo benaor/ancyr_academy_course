@@ -10,6 +10,16 @@ export class inMemoryTableGateway implements ITableGateway {
         title: "Close to the window",
         capacity: 3,
       }),
+      TableFactory.create({
+        id: "2",
+        title: "Close to the kitchen",
+        capacity: 4,
+      }),
+      TableFactory.create({
+        id: "3",
+        title: "Close to the bar",
+        capacity: 2,
+      }),
     ];
   }
 }
