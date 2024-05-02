@@ -174,18 +174,101 @@ describe("Assinging meals", () => {
     tableId: "1",
   };
 
-  it("Should assign NULL as an entry", () => {
-    const result = mealForm.assignEntry(form, adult.id, null);
-    expect(result.guests[0].meals.entry).toBeNull();
+  describe("Assigning entry", () => {
+    it.each([
+      {
+        guestId: adult.id,
+        mealId: null,
+        expected: null,
+      },
+      {
+        guestId: adult.id,
+        mealId: adultEntry.id,
+        expected: adultEntry.id,
+      },
+      {
+        guestId: "non-existant",
+        mealId: adultEntry.id,
+        expected: form.guests[0].meals.entry,
+      },
+    ])("Should assign an entry to a guest", ({ guestId, mealId, expected }) => {
+      const result = mealForm.assignEntry(form, guestId, mealId);
+      expect(result.guests[0].meals.entry).toEqual(expected);
+    });
   });
 
-  it("Should assign the adult entry as an entry to an adult guest", () => {
-    const result = mealForm.assignEntry(form, adult.id, adultEntry.id);
-    expect(result.guests[0].meals.entry).toEqual(adultEntry.id);
+  describe("Assigning main course", () => {
+    it.each([
+      {
+        guestId: adult.id,
+        mealId: null,
+        expected: null,
+      },
+      {
+        guestId: adult.id,
+        mealId: adultMainCourse.id,
+        expected: adultMainCourse.id,
+      },
+      {
+        guestId: "non-existant",
+        mealId: adultMainCourse.id,
+        expected: form.guests[0].meals.mainCourse,
+      },
+    ])(
+      "Should assign a main course to a guest",
+      ({ guestId, mealId, expected }) => {
+        const result = mealForm.assignMainCourse(form, guestId, mealId);
+        expect(result.guests[0].meals.mainCourse).toEqual(expected);
+      }
+    );
   });
 
-  it("Should assign the adult entry as an entry to an unexisting guest", () => {
-    const result = mealForm.assignEntry(form, "non-existant", adultEntry.id);
-    expect(result).toEqual(form);
+  describe("Assigning dessert", () => {
+    it.each([
+      {
+        guestId: adult.id,
+        mealId: null,
+        expected: null,
+      },
+      {
+        guestId: adult.id,
+        mealId: adultDessert.id,
+        expected: adultDessert.id,
+      },
+      {
+        guestId: "non-existant",
+        mealId: adultDessert.id,
+        expected: form.guests[0].meals.dessert,
+      },
+    ])(
+      "Should assign a dessert to a guest",
+      ({ guestId, mealId, expected }) => {
+        const result = mealForm.assignDessert(form, guestId, mealId);
+        expect(result.guests[0].meals.dessert).toEqual(expected);
+      }
+    );
+  });
+
+  describe("Assigning drink", () => {
+    it.each([
+      {
+        guestId: adult.id,
+        mealId: null,
+        expected: null,
+      },
+      {
+        guestId: adult.id,
+        mealId: adultDrink.id,
+        expected: adultDrink.id,
+      },
+      {
+        guestId: "non-existant",
+        mealId: adultDrink.id,
+        expected: form.guests[0].meals.drink,
+      },
+    ])("Should assign a drink to a guest", ({ guestId, mealId, expected }) => {
+      const result = mealForm.assignDrink(form, guestId, mealId);
+      expect(result.guests[0].meals.drink).toEqual(expected);
+    });
   });
 });

@@ -74,4 +74,46 @@ export class MealForm {
       guest.meals.entry = mealId;
     });
   }
+
+  assignMainCourse(
+    form: OrderingDomainModel.Form,
+    guestId: OrderingDomainModel.Guest["id"],
+    mealId: OrderingDomainModel.MealId | null
+  ) {
+    return produce(form, (draft) => {
+      const guest = draft.guests.find((g) => g.id === guestId);
+
+      if (!guest) return;
+
+      guest.meals.mainCourse = mealId;
+    });
+  }
+
+  assignDessert(
+    form: OrderingDomainModel.Form,
+    guestId: OrderingDomainModel.Guest["id"],
+    mealId: OrderingDomainModel.MealId | null
+  ) {
+    return produce(form, (draft) => {
+      const guest = draft.guests.find((g) => g.id === guestId);
+
+      if (!guest) return;
+
+      guest.meals.dessert = mealId;
+    });
+  }
+
+  assignDrink(
+    form: OrderingDomainModel.Form,
+    guestId: OrderingDomainModel.Guest["id"],
+    mealId: OrderingDomainModel.MealId | null
+  ) {
+    return produce(form, (draft) => {
+      const guest = draft.guests.find((g) => g.id === guestId);
+
+      if (!guest) return;
+
+      guest.meals.drink = mealId;
+    });
+  }
 }
