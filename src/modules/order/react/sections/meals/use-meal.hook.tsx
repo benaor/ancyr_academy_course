@@ -6,7 +6,9 @@ import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 export const useMeal = () => {
-  const meals: OrderingDomainModel.Meal[] = [];
+  const meals: OrderingDomainModel.Meal[] = useSelector(
+    (state: AppState) => state.ordering.availableMeals.data
+  );
 
   const mealForm = useRef(new MealForm());
 
@@ -73,7 +75,7 @@ export const useMeal = () => {
   }
 
   function isSubmittable() {
-    return false;
+    return mealForm.current.isSubmittable(form);
   }
 
   return {

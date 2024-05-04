@@ -1,4 +1,5 @@
 import { SystemIdProvider } from "@ratatouille/modules/core/system.id-provider";
+import { InMemoryMealGateway } from "@ratatouille/modules/order/core/gateway-infra/in-memory.meal-gateway";
 import { inMemoryTableGateway } from "@ratatouille/modules/order/core/gateway-infra/in-memory.table-gateway";
 import { Dependencies } from "@ratatouille/modules/store/dependencies";
 import { AppStore, createStore } from "@ratatouille/modules/store/store";
@@ -16,6 +17,7 @@ export class App {
     return {
       idProvider: new SystemIdProvider(),
       tableGateway: new inMemoryTableGateway(),
+      mealGateway: new InMemoryMealGateway(),
     };
   }
 }
