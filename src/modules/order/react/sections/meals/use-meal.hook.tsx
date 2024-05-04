@@ -1,6 +1,7 @@
 import { MealForm } from "@ratatouille/modules/order/core/form/meal.form";
 import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
 import { orderingActions } from "@ratatouille/modules/order/core/store/ordering.slice";
+import { chooseMeals } from "@ratatouille/modules/order/core/usecases/choose-meal.usecase";
 import { AppState, useAppDispatch } from "@ratatouille/modules/store/store";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -67,7 +68,7 @@ export const useMeal = () => {
   }
 
   function onNext() {
-    dispatch(orderingActions.setStep(OrderingDomainModel.OrderingStep.SUMMARY));
+    dispatch(chooseMeals(form));
   }
 
   function onPrevious() {

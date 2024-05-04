@@ -13,7 +13,7 @@ describe("Choose guest", () => {
           id: "1",
         }),
       ],
-
+      tableId: null,
       organizerId: null,
     };
 

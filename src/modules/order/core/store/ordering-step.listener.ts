@@ -22,4 +22,13 @@ export const registerOrderingStepListener = (
       );
     },
   });
+
+  listener.startListening({
+    actionCreator: orderingActions.chooseMeals,
+    effect(_, api) {
+      api.dispatch(
+        orderingActions.setStep(OrderingDomainModel.OrderingStep.SUMMARY)
+      );
+    },
+  });
 };
