@@ -1,6 +1,5 @@
 import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
-import { stepSelector } from "@ratatouille/modules/order/react/pages/order/step.selector";
-import { formSelector } from "@ratatouille/modules/order/react/sections/guest/form.selector";
+import { stepSelector } from "@ratatouille/modules/order/core/selectors/step.selector";
 import { createTestState } from "@ratatouille/modules/testing/tests-environment";
 
 const orderingState: OrderingDomainModel.State = {
@@ -25,16 +24,12 @@ const orderingState: OrderingDomainModel.State = {
   },
 };
 
-describe("form selector", () => {
+describe("Step selector", () => {
   it("Should return the current step", () => {
     const state = createTestState({
       ordering: orderingState,
     });
 
-    expect(formSelector(state)).toEqual({
-      guests: [],
-      organizerId: null,
-      tableId: null,
-    });
+    expect(stepSelector(state)).toBe(OrderingDomainModel.OrderingStep.GUESTS);
   });
 });
