@@ -2,6 +2,7 @@ import { useDependencies } from "@ratatouille/modules/app/react/DependenciesProv
 import { GuestForm } from "@ratatouille/modules/order/core/form/guest.form";
 import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
 import { chooseGuests } from "@ratatouille/modules/order/core/usecases/choose-guest.usecase";
+import { formSelector } from "@ratatouille/modules/order/react/sections/guest/form.selector";
 import { AppState, useAppDispatch } from "@ratatouille/modules/store/store";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -9,7 +10,7 @@ import { useSelector } from "react-redux";
 export const useGuestSection = () => {
   const dispatch = useAppDispatch();
   const { idProvider } = useDependencies();
-  const initialForm = useSelector((state: AppState) => state.ordering.form);
+  const initialForm = useSelector(formSelector);
   const [form, setForm] = useState<OrderingDomainModel.Form>(initialForm);
 
   const guestForm = useRef(new GuestForm(idProvider));

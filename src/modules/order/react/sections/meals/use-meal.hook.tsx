@@ -2,6 +2,7 @@ import { MealForm } from "@ratatouille/modules/order/core/form/meal.form";
 import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
 import { orderingActions } from "@ratatouille/modules/order/core/store/ordering.slice";
 import { chooseMeals } from "@ratatouille/modules/order/core/usecases/choose-meal.usecase";
+import { formSelector } from "@ratatouille/modules/order/react/sections/guest/form.selector";
 import { AppState, useAppDispatch } from "@ratatouille/modules/store/store";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -14,7 +15,7 @@ export const useMeal = () => {
   const mealForm = useRef(new MealForm());
 
   const dispatch = useAppDispatch();
-  const initialForm = useSelector((state: AppState) => state.ordering.form);
+  const initialForm = useSelector(formSelector);
 
   const [form, setForm] = useState(initialForm);
 

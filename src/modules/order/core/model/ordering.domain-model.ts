@@ -81,4 +81,27 @@ export namespace OrderingDomainModel {
 
     reservation: ReservationStatus;
   };
+
+  export type MealSummary = {
+    id: string;
+    title: string;
+  };
+
+  export type Summary = {
+    table: {
+      id: string;
+      title: string;
+    };
+    guests: Array<{
+      id: string;
+      name: string;
+      isOrganizer: boolean;
+      meals: {
+        entry: MealSummary | null;
+        mainCourse: MealSummary;
+        dessert: MealSummary | null;
+        drink: MealSummary | null;
+      };
+    }>;
+  };
 }

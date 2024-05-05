@@ -10,9 +10,10 @@ import { TableSection } from "@ratatouille/modules/order/react/sections/table/Ta
 import { SummarySection } from "@ratatouille/modules/order/react/sections/summary/SummarySection";
 import { ReservedSection } from "@ratatouille/modules/order/react/sections/reserved/ReservedSection";
 import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
+import { stepSelector } from "@ratatouille/modules/order/react/pages/order/step.selector";
 
 export const OrderPage: React.FC = () => {
-  const step = useSelector((state: AppState) => state.ordering.step);
+  const step = useSelector(stepSelector);
   return (
     <main>
       {step === OrderingDomainModel.OrderingStep.GUESTS && <GuestSection />}
