@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "typecheck": "tsc --noEmit",
+    "pretty": "pretty-quick --staged",
+    "prepare": "husky install",
+    "hook:precommit": "pnpm typecheck && pnpm run lint && pnpm run pretty"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
