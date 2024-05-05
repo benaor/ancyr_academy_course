@@ -1,41 +1,7 @@
 import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export type ReservationStatus =
-  | {
-      status: "idle";
-    }
-  | {
-      status: "loading";
-    }
-  | {
-      status: "error";
-      error: string;
-    }
-  | {
-      status: "success";
-    };
-
-export type OrderingState = {
-  step: OrderingDomainModel.OrderingStep;
-  form: OrderingDomainModel.Form;
-
-  availableTables: {
-    status: "idle" | "loading" | "success" | "error";
-    error: string | null;
-    data: OrderingDomainModel.Table[];
-  };
-
-  availableMeals: {
-    status: "idle" | "loading" | "success" | "error";
-    error: string | null;
-    data: OrderingDomainModel.Meal[];
-  };
-
-  reservation: ReservationStatus;
-};
-
-export const initialState: OrderingState = {
+export const initialState: OrderingDomainModel.State = {
   step: OrderingDomainModel.OrderingStep.GUESTS,
   form: {
     guests: [],
