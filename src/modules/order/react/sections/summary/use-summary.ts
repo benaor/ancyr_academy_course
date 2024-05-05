@@ -1,5 +1,6 @@
 import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
 import { orderingActions } from "@ratatouille/modules/order/core/store/ordering.slice";
+import { reserve } from "@ratatouille/modules/order/core/usecases/reserve.usecase";
 import { AppState, useAppDispatch } from "@ratatouille/modules/store/store";
 import { useSelector } from "react-redux";
 
@@ -69,7 +70,9 @@ export const useSummary = () => {
     dispatch(orderingActions.setStep(OrderingDomainModel.OrderingStep.MEALS));
   }
 
-  function onNext() {}
+  function onNext() {
+    dispatch(reserve());
+  }
 
   const summary: Summary = useSelector(selectSummary);
 

@@ -31,4 +31,13 @@ export const registerOrderingStepListener = (
       );
     },
   });
+
+  listener.startListening({
+    actionCreator: orderingActions.handleReservationSuccess,
+    effect(_, api) {
+      api.dispatch(
+        orderingActions.setStep(OrderingDomainModel.OrderingStep.RESERVED)
+      );
+    },
+  });
 };
