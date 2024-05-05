@@ -1,11 +1,14 @@
 import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model";
+import { invariant } from "@ratatouille/modules/shared/invariant";
 import { AppState } from "@ratatouille/modules/store/store";
 
 export const selectSummary = (state: AppState): OrderingDomainModel.Summary => {
-  function getMealById(mealId: string) {
-    return (
-      state.ordering.availableMeals.data.find(({ id }) => id === mealId) ?? null
-    );
+  function getMealById(mealId: string): OrderingDomainModel.MealSummary {
+    const meal = meals.find(({ id }) => id === mealId)!;
+
+    invariant(meal !== null, `Meal with id ${mealId} not found`);
+
+    return { id: meal.id, title: meal.title };
   }
 
   const tableId = state.ordering.form.tableId;
@@ -16,6 +19,7 @@ export const selectSummary = (state: AppState): OrderingDomainModel.Summary => {
   )!;
 
   const meals = state.ordering.availableMeals.data;
+
   const guests = state.ordering.form.guests.map((guest) => ({
     id: guest.id,
     isOrganizer: guest.id === organizerId,

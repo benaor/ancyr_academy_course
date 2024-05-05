@@ -14,6 +14,7 @@ export class guestFactory {
         mainCourse: null,
         dessert: null,
         drink: null,
+        ...data?.meals,
       },
       ...data,
     };
